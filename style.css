@@ -15,30 +15,36 @@ button {
     color: white;
 }
 
-.operations button {
+#operations button{
     background-color: orange;
 }
 
-.numbers button {
+#numbers button {
     background-color: gray;
 }
 
-.input {
+.display {
     
-    width: 400px;
+    width: 360px;
     height: 100px;
     background-color: rgb(177, 177, 177);
     margin-top: 50px;
+    text-align: right;
+    align-content: end;
+    color: white;
+    font-size: 80px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 450px;
-    height: 600px;
+    height: 700px;
     margin: 0;
     padding: 0;
     background-color: black;
+    gap: 20px;
 }
 
 .inner-container {
@@ -51,7 +57,7 @@ button {
 
 }
 
-.numbers {
+#numbers {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -62,8 +68,14 @@ button {
     gap: 10px;
 }
 
-.operations {
+#operations {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
+
+.row .AC-button {
+    background-color: orange;
+}
+
+
