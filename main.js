@@ -49,94 +49,66 @@ const operatorMap = {
 
 
 
-function operate(operator, num1, num2) {
+function operate(operator, n1, n2) {
 
     // change number array into full numbers.
-    let number_1 = Number(num1);
-    let number_2 = Number(num2);
+    let number_1 = Number(n1);
+    let number_2 = Number(n2);
+    let result = operatorMap[operator](number_1,number_2);
 
-    // i need to catch the result, then push it back to num1 and return the value
-    let result;
-    switch (operator) {
+    if (result === "Undefined") {
+        displayValue = "Undefined, press AC";
+        errorFlag = true;
+        console.log(errorFlag);
 
-        case "+":
-            result = add(number_1,number_2);
-            break;
-        case "-":
-            result = subtract(number_1,number_2);
-            break;
-        case "*":
-            result = multiply(number_1,number_2);
-            break;
-        case "/":
-            result = divide(number_1,number_2);
-            break;
-        case "%":
-            result = remainder(number_1,number_2);
-            break;
-        default:
-            throw new Error("Unknown operator");
+        display();
     }
-    updateDisplay(result);
+    console.log(result);
+
+    displayValue = result;
+    display(result);
 
     num1 = String(result);
     num2 = "";
     operation = "";
+
     
-    console.log(num1);
-    console.log(num2);
-
     finishNumber = false;
-
-
-
 }
 
 function handleNumbers(event) {
     // if its undefined the user must clear, not add any more numbers
     if (errorFlag) return;
 
+
+    //displayValue = "";
+
     const number = event.target.dataset.value;
 
-    displayValue += number
-
-    console.log(displayValue);
+    displayValue += number;
 
 
     if (finishNumber == true) {
         num2 += number;
-        displayValue = "";
+        display();
+
+
     } else { // finishNumber == false
         num1 += number;
+        display();
     }
-
-    display();
-
-
-
 }
 
-function handleOperator() {
+function handleOperator(event) {
     if (errorFlag) return;
 
-}
+    const symbol = event.target.dataset.value;
 
-function update(target) {
-    let id = target.id
-    if (target.parentElement.id === "operations") {
-        
-        finishNumber = true;
+    operation = symbol;
+    displayValue = symbol;
+    finishNumber = true;
+    display();
 
-        operation = id;
-        updateDisplay(operation);
-
-    } else if (target.parentElement.parentElement.id === "numbers") {
-        if (target.id == "=") {   
-            operate(operation,num1,num2);
-        } else {
-            checkNumber(id);
-        }
-    } 
 }
 
 function clearCalculator () {
@@ -160,5 +132,11 @@ operatorButtons.forEach(button => {
     });
 });
 
-equalsButton.addEventListener("click", operate);
+
+
+equalsButton.addEventListener("click", (event) => {
+    console.log("clicked equal sign");
+    operate(operation,num1,num2);
+});
+
 clearButton.addEventListener("click", clearCalculator);
