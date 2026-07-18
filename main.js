@@ -39,6 +39,7 @@ function remainder(num1,num2) {
     return num1 % num2;
 }
 
+// object that accesses functions
 const operatorMap = {
     "+": add,
     "-": subtract,
@@ -46,7 +47,6 @@ const operatorMap = {
     "/": divide,
     "%":remainder
 };
-
 
 
 function operate(operator, n1, n2) {
@@ -57,45 +57,58 @@ function operate(operator, n1, n2) {
     let result = operatorMap[operator](number_1,number_2);
 
     if (result === "Undefined") {
-        displayValue = "Undefined, press AC";
+        displayValue = "Error";
         errorFlag = true;
         console.log(errorFlag);
 
-        display();
+        
+    } else {
+
+        //const periodIndex = result.indexOf(".");
+        //if (result.slice(periodIndex)) 
+        result = parseFloat(result.toFixed(4));
+        console.log(result);
+
+        displayValue = result;
+
+        // reset the cycle 
+        num1 = String(result);
+        num2 = "";
+        operation = "";
+        finishNumber = false;
+
     }
-    console.log(result);
-
-    displayValue = result;
-    display(result);
-
-    num1 = String(result);
-    num2 = "";
-    operation = "";
-
+    display()
     
-    finishNumber = false;
 }
 
 function handleNumbers(event) {
     // if its undefined the user must clear, not add any more numbers
     if (errorFlag) return;
 
-
-    //displayValue = "";
-
     const number = event.target.dataset.value;
 
-    displayValue += number;
-
-
     if (finishNumber == true) {
-        num2 += number;
+
+        if (number == "." && num2.length === 0) {
+            displayValue += "0." ;
+            num2 += "0.";
+        } else {
+            displayValue += number;
+            num2 += number;
+        }
         display();
 
-
-    } else { // finishNumber == false
-        num1 += number;
+    } else { 
+        if (number == "." && num1.length === 0) {
+            displayValue += "0.";
+            num2 += "0.";
+        } else {
+            num1 += number;
+            displayValue += number;
+        }
         display();
+
     }
 }
 
