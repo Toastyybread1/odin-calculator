@@ -7,6 +7,7 @@ const clearButton = document.querySelector(".clear");
 let displayValue = "";
 let finishNumber = false;
 let errorFlag = false;
+let completeOperation = false;
 let num1 = "";
 let num2 = "";
 let operation = "";
@@ -50,8 +51,6 @@ const operatorMap = {
 
 
 function operate(operator, n1, n2) {
-
-    // change number array into full numbers.
     let number_1 = Number(n1);
     let number_2 = Number(n2);
     let result = operatorMap[operator](number_1,number_2);
@@ -71,7 +70,6 @@ function operate(operator, n1, n2) {
 
         displayValue = result;
 
-        // reset the cycle 
         num1 = String(result);
         num2 = "";
         operation = "";
@@ -88,6 +86,15 @@ function handleNumbers(event) {
 
     const number = event.target.dataset.value;
 
+    //pretty cool, find period first, then whatever 0 or more characters that follow it, then find the last literal character period
+    //after use the .test() which searches the string, .search returns the indexes where the regex is found.
+    const regexPeriod = /\..*\./
+    const hasTwoPeriods = regexPeriod.test(str);
+
+
+    if ((number == "." && num1.includes(".")) || (number == "." && num2.includes(".")) ) {
+        return;
+    }
     if (finishNumber == true) {
 
         if (number == "." && num2.length === 0) {
@@ -120,6 +127,7 @@ function handleOperator(event) {
     operation = symbol;
     displayValue = symbol;
     finishNumber = true;
+    completeOperation = true;
     display();
 
 }
@@ -145,10 +153,7 @@ operatorButtons.forEach(button => {
     });
 });
 
-
-
 equalsButton.addEventListener("click", (event) => {
-    console.log("clicked equal sign");
     operate(operation,num1,num2);
 });
 
