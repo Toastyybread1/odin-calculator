@@ -88,9 +88,12 @@ function handleNumbers(event) {
 
     //pretty cool, find period first, then whatever 0 or more characters that follow it, then find the last literal character period
     //after use the .test() which searches the string, .search returns the indexes where the regex is found.
-    const regexPeriod = /\..*\./
-    const hasTwoPeriods = regexPeriod.test(str);
-
+    // const regexPeriod = /\..*\./
+    // const hasTwoPeriods = regexPeriod.test(regexPeriod);
+    if (completeOperation == true) {
+        displayValue = "";
+        completeOperation = false;
+    }
 
     if ((number == "." && num1.includes(".")) || (number == "." && num2.includes(".")) ) {
         return;
